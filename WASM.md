@@ -12,6 +12,7 @@ Local<WasmCompiledModule> module = WasmCompiledModule::DeserializeOrCompile(isol
 
 v8 doesn't expose its webassembly api directly, you have to get them from JS global context. The following code creates a module instance, and gets the exports of the instance:
 
+sample/wasm.cc
 ```cpp
     using args_type = Local<Value>[];
 
@@ -38,8 +39,10 @@ Then you can get the add function from exports object and call it:
  ```
  
  
- ## The Final Result with example wasm Code 
- ```cpp
+## The Final Result with example wasm Code 
+
+samples/wasm.cc
+```cpp
  #include <include/v8.h>
 
 #include <include/libplatform/libplatform.h>
@@ -125,3 +128,9 @@ int main(int argc, char* argv[]) {
   return 0;
 }
  ```
+
+Build Follow the instruction in Run the example from the official [Getting started with embedding V8](https://v8.dev/docs/embed#run-the-example). Save the code to sample/wasm.cc and execute following commands
+```bash
+g++ -I. -O2 -Iinclude samples/wasm.cc -o wasm  -lv8_monolith -Lout.gn/x64.release.sample/obj/ -pthread -std=c++17
+./wasm
+```
